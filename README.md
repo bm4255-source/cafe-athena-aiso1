@@ -18,18 +18,18 @@ Team: Baishnavi, Srishti, Haarika, Janhvi
 
 | Step | Where |
 |---|---|
-| 1. Discovery: 15 customer questions | [`data/queries.csv`](data/queries.csv) |
-| 2. Results: 240 AI answers | [`data/before_scores.csv`](data/before_scores.csv), [`data/missed_answers.csv`](data/missed_answers.csv), [`results/`](results/) |
-| 3. Problem: why competitors win | [this README](#3-problem-why-competitors-win), [`results/summary.md`](results/summary.md) |
-| 4. Fix: new website + content | [`website/index.html`](website/index.html), [`fixes/`](fixes/) |
-| 5. Improved results | [`measure/simulate_after.py`](measure/simulate_after.py), [`data/after_scores.csv`](data/after_scores.csv) |
-| Automated agent (all steps) | [`agent/aiso_agent.py`](agent/aiso_agent.py) |
+| 1. Discovery: 15 customer questions | [`queries.csv`](queries.csv) |
+| 2. Results: 240 AI answers | [`before_scores.csv`](before_scores.csv), [`missed_answers.csv`](missed_answers.csv), charts below |
+| 3. Problem: why competitors win | [this README](#3-problem-why-competitors-win) |
+| 4. Fix: new website + content | [`index.html`](index.html), [`faq.md`](faq.md), [`schema.json`](schema.json) |
+| 5. Improved results | [`simulate_after.py`](simulate_after.py), [`after_scores.csv`](after_scores.csv) |
+| Automated agent (all steps) | [`aiso_agent.py`](aiso_agent.py) |
 
 ---
 
 ## 1. Discovery
 
-We wrote **15 questions** a real customer in San Diego might ask an AI assistant, across 6 intents: Greek food, dietary needs, happy hour and drinks, date night, events and groups, and visitors. See [`data/queries.csv`](data/queries.csv).
+We wrote **15 questions** a real customer in San Diego might ask an AI assistant, across 6 intents: Greek food, dietary needs, happy hour and drinks, date night, events and groups, and visitors. See [`queries.csv`](queries.csv).
 
 Each of the 4 teammates asked all 15 questions on 4 AI tools (ChatGPT, Claude, Gemini, Perplexity; one teammate used Grok in place of Perplexity) and recorded whether Café Athena was mentioned and, when it wasn't, who was recommended instead.
 
@@ -47,7 +47,7 @@ Each of the 4 teammates asked all 15 questions on 4 AI tools (ChatGPT, Claude, G
 | ChatGPT | 23 / 60 | 38% |
 | Gemini | 17 / 60 | **28%** |
 
-![Before by platform](results/1_before_by_platform.png)
+![Before by platform](1_before_by_platform.png)
 
 **Finding 1: Visibility depends on which AI you ask.** Perplexity searches the web live and finds Café Athena. Gemini relies on Google's own data and rarely does.
 
@@ -63,7 +63,7 @@ Each of the 4 teammates asked all 15 questions on 4 AI tools (ChatGPT, Claude, G
 | 5 | Vegan-friendly sit-down restaurant | 6 |
 | 11 | Host a rehearsal dinner in Pacific Beach | 6 |
 
-![Missed questions](results/2_missed_questions.png)
+![Missed questions](2_missed_questions.png)
 
 ## 3. Problem: why competitors win
 
@@ -84,39 +84,39 @@ Supporting evidence:
 - **Missing from lists:** not in a recent "Top 5 Greek Restaurants in San Diego" article.
 - **Main rival: Mezé Greek Fusion**, another Greek restaurant that beats Café Athena on happy hour, private rooms and catering.
 
-![Competitors](results/3_competitors.png)
+![Competitors](3_competitors.png)
 
 ## 4. Fix: the new website and content
 
 | Problem | Fix | File |
 |---|---|---|
-| AI doesn't know about events, happy hour, cocktails, vegan, catering | One clear section per strength, with specific details | [`website/index.html`](website/index.html) |
-| AI needs answers it can quote | FAQ worded the way people ask AI | [`fixes/faq.md`](fixes/faq.md) |
-| Computers need facts in a standard format | Schema.org code (Restaurant + FAQPage), built into the website | [`fixes/schema.json`](fixes/schema.json) |
-| Gemini is weakest (Google data) | Google Business Profile, attributes, posts, honest review card | [`fixes/google_business_profile.md`](fixes/google_business_profile.md) |
-| Not on "best of" lists; old press | Outreach emails, sent only after owner approval | [`fixes/outreach_emails.md`](fixes/outreach_emails.md) |
+| AI doesn't know about events, happy hour, cocktails, vegan, catering | One clear section per strength, with specific details | [`index.html`](index.html) |
+| AI needs answers it can quote | FAQ worded the way people ask AI | [`faq.md`](faq.md) |
+| Computers need facts in a standard format | Schema.org code (Restaurant + FAQPage), built into the website | [`schema.json`](schema.json) |
+| Gemini is weakest (Google data) | Google Business Profile, attributes, posts, honest review card | [`google_business_profile.md`](google_business_profile.md) |
+| Not on "best of" lists; old press | Outreach emails, sent only after owner approval | [`outreach_emails.md`](outreach_emails.md) |
 
-**The website** ([`website/index.html`](website/index.html)) is a concept redesign by our team, not the official site. Facts come from the hackathon brief. Prices, room sizes, cocktail names and contact details are **examples (dotted underline) for the owner to replace**.
+**The website** ([`index.html`](index.html)) is a concept redesign by our team, not the official site. Facts come from the hackathon brief. Prices, room sizes, cocktail names and contact details are **examples (dotted underline) for the owner to replace**.
 
 ## 5. Improved results
 
 Real AI tools take weeks to notice a new website, so we measure two ways:
 
-**A. Simulated AI search (today).** [`measure/simulate_after.py`](measure/simulate_after.py) gives an AI the same competitor search results twice: once with Café Athena's old, vague info, once with the new website. Only Café Athena's content changes, so any difference is caused by the fixes.
+**A. Simulated AI search (today).** [`simulate_after.py`](simulate_after.py) gives an AI the same competitor search results twice: once with Café Athena's old, vague info, once with the new website. Only Café Athena's content changes, so any difference is caused by the fixes.
 
 ```bash
 pip install anthropic beautifulsoup4 matplotlib
 export ANTHROPIC_API_KEY="sk-ant-..."
-python measure/simulate_after.py --rounds 3
+python simulate_after.py --rounds 3
 ```
 
-**B. Re-survey (weekly, after the site goes live).** Ask the same 15 questions on the same AI tools, fill in [`data/after_scores.csv`](data/after_scores.csv) (same format as the before file), then:
+**B. Re-survey (weekly, after the site goes live).** Ask the same 15 questions on the same AI tools, fill in [`after_scores.csv`](after_scores.csv) (same format as the before file), then:
 
 ```bash
-python analysis/analyze.py
+python analyze.py
 ```
 
-This updates [`results/summary.md`](results/summary.md) and creates `results/4_before_vs_after.png`.
+This updates [`summary.md`](summary.md) and creates `4_before_vs_after.png`.
 
 | | Before | After |
 |---|---|---|
@@ -125,11 +125,11 @@ This updates [`results/summary.md`](results/summary.md) and creates `results/4_b
 
 ## Automated agent
 
-[`agent/aiso_agent.py`](agent/aiso_agent.py) runs the whole loop automatically through the AI APIs: discover → analyze (including a website audit) → write fixes → human approval → measure → HTML report.
+[`aiso_agent.py`](aiso_agent.py) runs the whole loop automatically through the AI APIs: discover → analyze (including a website audit) → write fixes → human approval → measure → HTML report.
 
 ```bash
-python agent/aiso_agent.py all --mock --yes   # practice run, no API key
-python agent/aiso_agent.py all                # real run
+python aiso_agent.py all --mock --yes   # practice run, no API key
+python aiso_agent.py all                # real run
 ```
 
 ## Project structure
