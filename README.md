@@ -1,150 +1,67 @@
-# Café Athena: AI Search Optimization (AISO)
-**NYU SPS × Pulse Foundry Hackathon · October 23, 2026**
-Team: Baishnavi, Srishti, Haarika, Janhvi
+# AISO Growth Agent — Café Athena
 
-> Café Athena already has everything San Diego diners ask AI for. The AI just doesn't know it yet. This project measures that, explains why, fixes it, and checks again.
+An agent that answers five questions for a restaurant owner — *Where do I rank in AI search? Why are competitors beating me? What should I change? Can you make the changes? Did it work?* — as a loop: **Discovery → Analysis → Action → Measurement**.
 
-**Target:** Café Athena, a Greek and Mediterranean restaurant and bar at 1846 Garnet Ave, Pacific Beach, San Diego, open since 1990. Daily happy hour 3–6 PM, Greek-mythology cocktails, vegan, vegetarian and gluten-free options, catering and private events.
+Target: Café Athena, 1846 Garnet Ave, Pacific Beach, San Diego.
 
----
+## Live dashboard
 
-## The loop
+- **Live version (runs Claude probes, the before/after test and the shared team test log):** https://claude.ai/artifact/3q2jZGbb7pxokpW1Xoi5XS
+- **Copy in this repo:** [`dashboard/index.html`](dashboard/index.html). Open it in a browser, or turn on GitHub Pages (Settings → Pages → Deploy from branch → `main`, folder `/ (root)`) and visit `/dashboard/`. The copy shows everything; the live features need the Claude version.
+- **Project website:** https://claude.ai/artifact/Hr51ddB8C758uXawppUB8p · **Pitch deck:** https://claude.ai/artifact/HNoHHi1SH7sRCbnA6vBtvK
 
-```
-1. DISCOVERY  →  2. RESULTS  →  3. PROBLEM  →  4. FIX (new website)  →  5. IMPROVED RESULTS
-      ↑                                                                              │
-      └──────────────────────── re-run every week ───────────────────────────────────┘
-```
-
-| Step | Where |
-|---|---|
-| 1. Discovery: 15 customer questions | [`queries.csv`](queries.csv) |
-| 2. Results: 240 AI answers | [`before_scores.csv`](before_scores.csv), [`missed_answers.csv`](missed_answers.csv), charts below |
-| 3. Problem: why competitors win | [this README](#3-problem-why-competitors-win) |
-| 4. Fix: new website + content | [`index.html`](index.html), [`faq.md`](faq.md), [`schema.json`](schema.json) |
-| 5. Improved results | [`simulate_after.py`](simulate_after.py), [`after_scores.csv`](after_scores.csv) |
-| Automated agent (all steps) | [`aiso_agent.py`](aiso_agent.py) |
-
----
-
-## 1. Discovery
-
-We wrote **15 questions** a real customer in San Diego might ask an AI assistant, across 6 intents: Greek food, dietary needs, happy hour and drinks, date night, events and groups, and visitors. See [`queries.csv`](queries.csv).
-
-Each of the 4 teammates asked all 15 questions on 4 AI tools (ChatGPT, Claude, Gemini, Perplexity; one teammate used Grok in place of Perplexity) and recorded whether Café Athena was mentioned and, when it wasn't, who was recommended instead.
-
-**4 testers × 4 AI tools × 15 questions = 240 AI answers.**
-
-## 2. Results (before)
-
-**Café Athena was mentioned in 113 of 240 answers (47%).**
-
-| AI tool | Mentioned | Rate |
-|---|---|---|
-| Perplexity | 37 / 45 | **82%** |
-| Grok | 9 / 15 | 60% |
-| Claude | 27 / 60 | 45% |
-| ChatGPT | 23 / 60 | 38% |
-| Gemini | 17 / 60 | **28%** |
-
-![Before by platform](1_before_by_platform.png)
-
-**Finding 1: Visibility depends on which AI you ask.** Perplexity searches the web live and finds Café Athena. Gemini relies on Google's own data and rarely does.
-
-**Finding 2: The same AI gives different people different answers.** Gemini mentioned Café Athena 10 of 15 times for one teammate and 0 of 15 for another. A restaurant owner can't check once and know where they stand, so the agent re-checks automatically.
-
-**Finding 3: It wins on identity and loses on occasions.** "Best Greek restaurant in Pacific Beach" was missed only once. Questions about what it *offers* were missed most:
-
-| # | Question | Times missed |
-|---|---|---|
-| 12 | Private room for a birthday party of 25 | **10** |
-| 8 | Small plates / tapas for happy hour | 7 |
-| 9 | Unique or creative cocktails | 7 |
-| 5 | Vegan-friendly sit-down restaurant | 6 |
-| 11 | Host a rehearsal dinner in Pacific Beach | 6 |
-
-![Missed questions](2_missed_questions.png)
-
-## 3. Problem: why competitors win
-
-Café Athena offers every one of those things. Competitors win because the information about them online is **specific and quotable**:
-
-| Competitor | What AI said about them |
-|---|---|
-| Athens Market Taverna | "Upstairs private dining room for **20–80 guests** with a private bar" |
-| Pacific Beach AleHouse | "Brewers Table **seats 25**", "private dining for **40–100**" |
-| Costa Brava | "**Half-price tapas, $2 sangria**, Sun–Thu **4–6 PM**" |
-| Mezé Greek Fusion | "Meze happy hour with **flaming saganaki**, dips, kebabs" |
-
-What AI said about Café Athena: *"I don't have confirmation that it has an enclosed private room, only that it does banquets"* and *"vegetarian-friendly with some vegan options."*
-
-Supporting evidence:
-- **Few reviews:** 101 on TripAdvisor in 35 years.
-- **Old press:** the main write-up is a 2014 student newspaper review.
-- **Missing from lists:** not in a recent "Top 5 Greek Restaurants in San Diego" article.
-- **Main rival: Mezé Greek Fusion**, another Greek restaurant that beats Café Athena on happy hour, private rooms and catering.
-
-![Competitors](3_competitors.png)
-
-## 4. Fix: the new website and content
-
-| Problem | Fix | File |
-|---|---|---|
-| AI doesn't know about events, happy hour, cocktails, vegan, catering | One clear section per strength, with specific details | [`index.html`](index.html) |
-| AI needs answers it can quote | FAQ worded the way people ask AI | [`faq.md`](faq.md) |
-| Computers need facts in a standard format | Schema.org code (Restaurant + FAQPage), built into the website | [`schema.json`](schema.json) |
-| Gemini is weakest (Google data) | Google Business Profile, attributes, posts, honest review card | [`google_business_profile.md`](google_business_profile.md) |
-| Not on "best of" lists; old press | Outreach emails, sent only after owner approval | [`outreach_emails.md`](outreach_emails.md) |
-
-**The website** ([`index.html`](index.html)) is a concept redesign by our team, not the official site. Facts come from the hackathon brief. Prices, room sizes, cocktail names and contact details are **examples (dotted underline) for the owner to replace**.
-
-## 5. Improved results
-
-Real AI tools take weeks to notice a new website, so we measure two ways:
-
-**A. Simulated AI search (today).** [`simulate_after.py`](simulate_after.py) gives an AI the same competitor search results twice: once with Café Athena's old, vague info, once with the new website. Only Café Athena's content changes, so any difference is caused by the fixes.
+## Quick start (5 minutes)
 
 ```bash
-pip install anthropic beautifulsoup4 matplotlib
-export ANTHROPIC_API_KEY="sk-ant-..."
-python simulate_after.py --rounds 3
+pip install -r requirements.txt
+export ANTHROPIC_API_KEY=...  OPENAI_API_KEY=...  GEMINI_API_KEY=...  PERPLEXITY_API_KEY=...
+
+# 0. smoke test without keys (numbers are fake and labeled SIMULATED)
+python -m aiso.cli loop --simulate --out out_sim
+
+# 1. baseline: the team's 15 questions + 3 branded + 2 control, x 4 platforms x 2 modes x 2 samples (~280 answers)
+#    add --bank full --rebuild-bank for the 59-question bank
+python -m aiso.cli discover --label baseline                  # --samples 1 for a fast demo run
+python -m aiso.cli analyze                                    # scorecard, site audit, ranked gaps
+python -m aiso.cli act                                        # generate content, queue actions
+python -m aiso.cli approve                                    # human approves each action
+python -m aiso.cli export                                     # out/report.md (visibility report) + out/dashboard.json for the dashboard
+
+python -m aiso.cli kit                                        # out/install_kit/: every fix as a ready-to-install file + INSTALL.md
+
+# 2. later: same bank, compare to baseline
+python -m aiso.cli measure --label week-1
 ```
 
-**B. Re-survey (weekly, after the site goes live).** Ask the same 15 questions on the same AI tools, fill in [`after_scores.csv`](after_scores.csv) (same format as the before file), then:
+Missing keys are skipped, so it runs with whatever platforms you have. If a provider rejects a model or tool name, change it in `config/cafe_athena.json` → `platforms`.
 
-```bash
-python analyze.py
-```
+## How each stage works
 
-This updates [`summary.md`](summary.md) and creates `4_before_vs_after.png`.
-
-| | Before | After |
+| Stage | What it does | Files |
 |---|---|---|
-| Overall mention rate | 47% | _[fill in]_ |
-| Private room for 25 (Q12) | missed 10 times | _[fill in]_ |
+| **Discovery** | Default bank = the team's 15 core San Diego questions across 7 intents (full option: fixed-seed 59-question bank across 9 intents) (best-of, dietary, happy hour, date night, groups/rehearsal, catering, quick lunch, visitor, comparison) + branded and control queries, optional LLM long-tail expansion. Each query runs on Claude, GPT, Gemini, Perplexity in **grounded** (live web search, what consumers see) and **parametric** (model memory) modes, N samples each. An LLM extractor turns each answer into an ordered list of places. | `aiso/discovery/` |
+| **Analysis** | Scorecard: mention rate (Wilson 95% CI), top-3 rate, avg rank, visibility index (mean 1/rank), share of voice, by platform and intent. Cited-domain analysis shows which sources AI pulls from. Site audit: JSON-LD types/fields, FAQ, menu-as-text, dietary labels, happy-hour consistency, robots.txt for AI bots, llms.txt. Diagnosis ranks gaps by impact × confidence ÷ effort and quotes the AI's own reasons for recommending each competitor. | `aiso/analysis/`, `research/findings.json` |
+| **Action** | Fact-locked generators (no invented facts; unknowns become `[OWNER TO CONFIRM]`): Restaurant/Menu/FAQPage/Review JSON-LD, menu description rewrites, FAQ, About copy, 5 occasion landing pages, llms.txt, robots.txt additions, listing-update sheet, 5 press outreach emails. Actions queue with preview → human approves → executor runs → logged → `rollback` for reversible ones. | `aiso/action/` |
+| **Measurement** | Every answer stored in SQLite. `measure` re-runs the identical bank; `compare` reports deltas with a two-proportion z-test and checks control queries (sushi/tacos) didn't move — so model drift isn't mistaken for impact. Weekly GitHub Action. | `aiso/measure/`, `.github/workflows/` |
 
-## Automated agent
+## Team baseline (Oct 23, consumer apps)
 
-[`aiso_agent.py`](aiso_agent.py) runs the whole loop automatically through the AI APIs: discover → analyze (including a website audit) → write fixes → human approval → measure → HTML report.
+Four testers ran the 15 questions in their own ChatGPT, Claude, Gemini and Perplexity (one used Grok): Café Athena was named in **113 of 240 answers (47%)**: Perplexity 82%, Grok 60%, Claude 45%, ChatGPT 38%, Gemini 28%. Raw counts: `research/team_baseline_2026-10-23.csv`. Re-run the same 15 questions with the same testers to measure change.
 
-```bash
-python aiso_agent.py all --mock --yes   # practice run, no API key
-python aiso_agent.py all                # real run
-```
+## Before you analyze: fill in review counts (5 minutes)
 
-## Project structure
+Open `research/competitor_signals.json` and type in Google review counts (and Yelp, if you like) for Café Athena and the top competitors, from their public Google Maps / Yelp pages. The agent then writes the verdict the brief's Greenwich Kitchen example asks for: *"Competitor A appears in 15/20 answers and has 340 Google reviews (you have 40)…"* followed by numbered actions. Leave it blank and the verdict still runs, without the review comparison.
 
-```
-data/        queries, before/after scores, every missed answer
-analysis/    analyze.py: turns the data into the summary and charts
-results/     summary.md and charts
-website/     new Café Athena website (concept) with all fixes built in
-fixes/       FAQ, schema, Google profile, outreach emails
-measure/     simulate_after.py: before/after test
-agent/       aiso_agent.py: the full automated agent
-```
+## Executors (all behind approval)
 
-## Limits
-- Survey answers vary by user, location (we were in New York asking about San Diego), login and chat history. That variation is itself a finding.
-- Some teammates recorded misses without naming the competitor, so competitor counts are a lower bound.
-- The simulated test shows the content works when AI reads it. Real-world change needs the site published and weekly re-checks.
+- `local_file` — ready-to-paste files (default)
+- `wp_draft` — set `WP_URL`, `WP_USER`, `WP_APP_PASSWORD` (WordPress application password). Creates **draft** pages, invisible to the public until the owner publishes; `rollback` deletes them. cafeathena.com runs WordPress (Divi).
+- `email_draft` — `.eml` drafts the owner sends from their own mailbox; nothing is sent automatically
+- `github_pr` / `webhook` — for sites in git, or any CMS via Zapier/Make/n8n
+
+## Honest limits
+
+- Consumer apps (ChatGPT, Gemini app, Perplexity app) add personalization and location the APIs don't fully reproduce; we pass San Diego as user location and sample each query multiple times, then report intervals, not point estimates.
+- Parametric answers only change after model retraining; grounded answers move within days of content and listing changes. Track them separately.
+- We don't scrape Google or Yelp (ToS). Off-site signals come from AI citations plus a checklist the owner confirms.
+- `research/findings.json` is a dated manual snapshot; re-verify before acting.
