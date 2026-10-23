@@ -1,0 +1,62 @@
+tester,platform,question_id,recommended_instead
+Janhvi,Gemini,2,Georgia's Greek Cuisine
+Janhvi,Gemini,4,
+Janhvi,Gemini,5,Slowly
+Janhvi,Gemini,7,Slowly
+Janhvi,Gemini,8,Slowly
+Janhvi,Gemini,9,Slowly
+Janhvi,Gemini,10,Slowly
+Janhvi,Gemini,11,World Famous
+Janhvi,Gemini,12,Georgia's Greek Cuisine
+Janhvi,Gemini,14,
+Janhvi,Grok,5,
+Janhvi,Grok,8,
+Janhvi,Grok,9,
+Janhvi,Grok,10,
+Janhvi,Grok,11,
+Janhvi,Grok,12,
+Baishnavi,Claude,5,Spitz
+Baishnavi,Claude,12,
+Baishnavi,Claude,14,
+Baishnavi,Perplexity,12,Athens Market Taverna
+Baishnavi,Gemini,2,Olympic Cafe;Georgia's Greek Cuisine
+Baishnavi,Gemini,7,Waterbar
+Baishnavi,Gemini,8,The Grass Skirt;Waterbar
+Baishnavi,Gemini,9,The Grass Skirt
+Baishnavi,Gemini,12,Waterbar;The Grass Skirt
+Srishti,ChatGPT,4,Spitz
+Srishti,ChatGPT,5,Shawarma Shack
+Srishti,ChatGPT,6,Mr. Moto Pizza
+Srishti,ChatGPT,8,Slowly
+Srishti,ChatGPT,9,The Grass Skirt
+Srishti,ChatGPT,10,Slowly
+Srishti,ChatGPT,11,Slowly
+Srishti,ChatGPT,12,Athens Market Taverna
+Srishti,ChatGPT,13,Georgia's Greek Cuisine;Olympic Cafe
+Srishti,Perplexity,12,Athens Market Taverna
+Srishti,Gemini,2,Mezé Greek Fusion
+Srishti,Gemini,3,Arslan's Gyros
+Srishti,Gemini,8,Mezé Greek Fusion
+Srishti,Gemini,9,The Grass Skirt
+Srishti,Gemini,11,Waterbar
+Srishti,Gemini,12,Kettner Exchange;Mezé Greek Fusion
+Srishti,Claude,5,Second Nature;Scuderie Italia
+Srishti,Claude,7,Bar Ella;PB Bar & Grill
+Srishti,Claude,8,Costa Brava;Captain's Quarters
+Srishti,Claude,9,Bar Ella;The Grass Skirt
+Srishti,Claude,11,Pacific Beach AleHouse;Backyard Kitchen & Tap
+Srishti,Claude,12,Pacific Beach AleHouse;Woodstock's Pizza
+Haarika,Gemini,1,Nick The Greek
+Haarika,Gemini,3,Greek Corner Cafe;Nick The Greek
+Haarika,Gemini,4,CAVA
+Haarika,Gemini,5,Ambrogio15
+Haarika,Gemini,6,Costa Brava
+Haarika,Gemini,7,Costa Brava
+Haarika,Gemini,8,Mezé Greek Fusion
+Haarika,Gemini,9,The Grass Skirt
+Haarika,Gemini,10,Ambrogio15
+Haarika,Gemini,11,Oceana Coastal Kitchen
+Haarika,Gemini,12,Mezé Greek Fusion
+Haarika,Gemini,13,Mezé Greek Fusion;Nick The Greek
+Haarika,Gemini,14,The Fishery;Waterbar;Costa Brava
+Haarika,Gemini,15,Rocky's Crown Pub

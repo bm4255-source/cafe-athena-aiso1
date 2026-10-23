@@ -1,0 +1,4 @@
+matplotlib
+anthropic
+beautifulsoup4
+requests
