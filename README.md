@@ -118,10 +118,11 @@ python analyze.py
 
 This updates [`summary.md`](summary.md) and creates `4_before_vs_after.png`.
 
-| | Before | After |
+| Test: simulated AI search (Claude), Q8, Q9, Q11, Q12 | Before | After |
 |---|---|---|
-| Overall mention rate | 47% | _[fill in]_ |
-| Private room for 25 (Q12) | missed 10 times | _[fill in]_ |
+| Café Athena mentioned | **1 / 4** | **4 / 4** |
+| Ranked #1 | 0 | 2 |
+| Survey (240 answers): overall mention rate | 47% | re-check weekly after launch |
 
 ## Automated agent
 
